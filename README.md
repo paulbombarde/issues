@@ -1,19 +1,5 @@
 # Issues
 
-**TODO: Add description**
+My own version of the "Issues" app from the [Progamming Elixir](https://pragprog.com/book/elixir13/programming-elixir-1-3) book from Dave Thomas.
 
-## Installation
-
-If [available in Hex](https://hex.pm/docs/publish), the package can be installed
-by adding `issues` to your list of dependencies in `mix.exs`:
-
-```elixir
-def deps do
-  [{:issues, "~> 0.1.0"}]
-end
-```
-
-Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_doc)
-and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
-be found at [https://hexdocs.pm/issues](https://hexdocs.pm/issues).
-
+The app will display in the terminal the list of the N oldest issues from a github repo.
