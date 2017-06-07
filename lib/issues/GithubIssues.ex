@@ -1,5 +1,7 @@
 defmodule Issues.GithubIssues do
   @user_agent [{"User-agent", "Elixir"}]
+  @github_url Application.get_env(:issues, :github_url)
+
   def fetch(user, project) do
     issues_url(user, project)
     |> HTTPoison.get(@user_agent)
@@ -7,7 +9,7 @@ defmodule Issues.GithubIssues do
   end
 
   def issues_url(user, project) do
-   "http://api.github.com/repos/#{user}/#{project}/issues"
+    "#{@github_url}/repos/#{user}/#{project}/issues"
   end
 
   def handle_response ({:error, reason}) do
@@ -15,7 +17,7 @@ defmodule Issues.GithubIssues do
   end
 
   def handle_response ({:ok, %HTTPoison.Response{status_code: 200, body: body}}) do
-    body
+    {:ok, Poison.decode(body)}
   end
 
   def handle_response ({:ok, %HTTPoison.Response{status_code: _, body: body}}) do
