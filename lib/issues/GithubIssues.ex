@@ -17,7 +17,7 @@ defmodule Issues.GithubIssues do
   end
 
   def handle_response ({:ok, %HTTPoison.Response{status_code: 200, body: body}}) do
-    {:ok, Poison.decode(body)}
+    Poison.decode(body)
   end
 
   def handle_response ({:ok, %HTTPoison.Response{status_code: _, body: body}}) do
