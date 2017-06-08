@@ -1,15 +1,15 @@
 defmodule Issues.Formater do
   def format(list, cols) do
-    widths = compute_widths(list, cols)
-    d = compute_dashed_line(widths)
+    widths = compute_widths(cols, list)
+    d = compute_dashed_line(cols, widths)
     IO.puts d
-    IO.puts compute_line(widths, Map.new(cols,  &({&1, &1}) ))
+    IO.puts compute_line(cols, widths, Map.new(cols,  &({&1, &1}) ))
     IO.puts d
-    Enum.each(list, &(IO.puts compute_line(widths, &1)))
+    Enum.each(list, &(IO.puts compute_line(cols, widths, &1)))
     IO.puts d
   end
 
-  def compute_widths(list, cols) do
+  def compute_widths(cols, list) do
     acc = Map.new(cols, &({&1, String.length(&1)}))
     Enum.reduce(list, acc, &(extract_widths(&1,&2)))
   end
@@ -18,14 +18,14 @@ defmodule Issues.Formater do
     Map.new(acc, fn({k,v})-> {k, max(v, String.length(to_string(Map.get(issue, k, ""))))} end)
   end
 
-  def compute_dashed_line(widths) do
+  def compute_dashed_line(cols, widths) do
     # for each colomn, we add a pipe, a blank before the value and a blank after the value
     # then we add a final pipe
-    Enum.reduce(widths, "+", fn({_k,v}, s) -> s <> String.duplicate("-", v+2) <> "+" end)
+    Enum.reduce(cols, "+", fn(k, s) -> s <> String.duplicate("-", Map.get(widths,k)+2) <> "+" end)
   end
 
-  def compute_line(widths, issue) do
-    Enum.reduce(widths, "|", fn({k,v}, s) -> s <> " " <> String.pad_trailing(to_string(Map.get(issue, k, "")), v) <> " |" end)
+  def compute_line(cols, widths, issue) do
+    Enum.reduce(cols, "|", fn(k, s) -> s <> " " <> String.pad_trailing(to_string(Map.get(issue, k, "")), Map.get(widths, k)) <> " |" end)
   end
 
 end
