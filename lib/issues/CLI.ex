@@ -3,7 +3,7 @@ defmodule Issues.CLI do
   Parses the command line for the issues app
   """
   @default_count 4
-  def run(argv) do
+  def main(argv) do
     argv
     |> parse_args
     |> process

@@ -3,10 +3,13 @@ defmodule Issues.Mixfile do
 
   def project do
     [app: :issues,
+     name: "Issues",
+     source_url: "https://github.com/paulbombarde/issues",
      version: "0.1.0",
      elixir: "~> 1.4",
      build_embedded: Mix.env == :prod,
      start_permanent: Mix.env == :prod,
+     escript: escript(),
      deps: deps()]
   end
 
@@ -33,5 +36,9 @@ defmodule Issues.Mixfile do
       {:httpoison, "~> 0.11"},
       {:poison, "~> 3.1"}
     ]
+  end
+
+  def escript do
+    [main_module: Issues.CLI]
   end
 end
